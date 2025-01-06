@@ -33,6 +33,7 @@ custmerSchema.post("findOneAndDelete",async(customer)=>{
     if(customer.orders.length){
         const resu= await order.deleteMany({_id:{$in:customer.orders}});
         console.log(resu);
+        console.log("new");
         
     }
    
