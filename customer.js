@@ -29,8 +29,8 @@ const custmerSchema=new schema({
 const order=mongoose.model("order",orderSchema);
 const customer=mongoose.model("customer",custmerSchema);
 //post mongoose middleware
-custmerSchema.post("findOneAndDelete",async(customer)=>{
-    if(customer.orders.length){
+custmerSchema.post("findOneAndDelete",async(cust)=>{
+    if(cust.orders.length){
         const resu= await order.deleteMany({_id:{$in:customer.orders}});
         console.log(resu);
         console.log("new");
@@ -39,40 +39,40 @@ custmerSchema.post("findOneAndDelete",async(customer)=>{
    
     
 });
-// const addCustomer=async()=>{
-//     let cust1=new customer({
-//         name:"rajat",
+const addCustomer=async()=>{
+    let cust1=new customer({
+        name:"rajat",
         
-//     });
-//     let cust2=new customer({
-//         name:"ayush",
+    });
+    let cust2=new customer({
+        name:"ayush",
         
-//     });
-//     let order1=await order.findOne({item:"samosa"});
+    });
+    let order1=await order.findOne({item:"samosa"});
     
-//     let order2=await order.findOne({item:"burger"});
-//     cust1.orders.push(order1);
-//     cust1.orders.push(order2);
-//     await cust2.save();
-// }
-// addCustomer();
-// const addOrders=async()=>{
-//     await order.insertMany([
-//         {
-//         item:"samosa",
-//         price:150
-//     },
-//     {
-//         item:"chowmin",
-//         price:190
-//     },
-//     {
-//         item:"burger",
-//         price:180
-//     }]
-// )
-// };
-// addOrders();
+    let order2=await order.findOne({item:"burger"});
+    cust1.orders.push(order1);
+    cust1.orders.push(order2);
+    await cust2.save();
+}
+addCustomer();
+const addOrders=async()=>{
+    await order.insertMany([
+        {
+        item:"samosa",
+        price:150
+    },
+    {
+        item:"chowmin",
+        price:190
+    },
+    {
+        item:"burger",
+        price:180
+    }]
+)
+};
+addOrders();
 
 //delete custmer by id and delte custmer related orders 
 const delCust=async()=>{
